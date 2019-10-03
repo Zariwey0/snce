@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product list{% endblock %}
+
+{% block body %}
+    <h1>Product list</h1>
+
+    <form class="pull-right hidden" role="search" method="post" action="{{ path('product_searchtag') }}">
+        <input type="text" placeholder="Search by tag" name="search">            
+        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>   
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Tags</th>
+                <th>Created at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>
+                    {% if product.image is not null %}
+                        <a href="{{ path('product_edit', {'id': product.id}) }}"><img src="{{ asset('uploads/images/' ~ product.image) }}" width="100"/></a>
+                    {% endif %}
+                </td>                    
+                <td>
+                    {% for tag in product.tags %}
+                        {{ tag.name }}
+                    {% endfor %}
+                </td>
+                <td>{{ product.createdAt | date('d-m-Y') }}</td>
+                <td>
+                    <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
+                    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div><a href="{{ path('product_new') }}">Create new</a></div>
+    <div><a href="{{ path('product_index') }}">back to index</a></div>
+
+{% endblock %}

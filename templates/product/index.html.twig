@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+    <h1>Product index</h1>
+
+    <div><a href="{{ path('product_list') }}">Show list</a></div>
+    <div><a href="{{ path('product_new') }}">Create new</a></div>
+{% endblock %}
